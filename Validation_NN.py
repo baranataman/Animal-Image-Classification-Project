@@ -4,27 +4,27 @@ from sklearn.preprocessing import OneHotEncoder
 import matplotlib.pyplot as plt
 import random
 
-# X_train ve Y_train olarak oku
+# X_train and Y_train read into the memory
 X_train = np.round(np.genfromtxt('train_features.csv', delimiter=','),3)
 Y_train = np.genfromtxt('train_labels.csv')
 
-# sonra bunları birleştirip tek matrix oluştur ve shufflela
+# then merge these two matrices and shuffle
 trainningset = np.c_[X_train, Y_train]
 shuffledArray = random.sample(list(trainningset), len(trainningset))
 shuffledArray = np.array(shuffledArray)
 
-# bu shufflelanmış dataseti validation setlere böl
+# then divide this shuffled set into train and validation
 X_validation = shuffledArray[slice(20,55),:-1]
 Y_validation = shuffledArray[slice(20,55),1000]
 
-# sonra o shufflelanmışın validationunu sil
+# then erase the validation from the train
 shuffledArray = np.delete(shuffledArray, slice( 20,55), axis=0)
 
-# ve train seti de güncelle
+# and update the train set
 X_train = shuffledArray[:, :-1] 
 Y_train = shuffledArray[:, 1000]
 
-# test seti oku
+# read test set
 X_test = np.round(np.genfromtxt('test_features.csv', delimiter=','),3)
 Y_test = np.genfromtxt('test_labels.csv')
 
